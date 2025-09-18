@@ -1,0 +1,9 @@
+streamlit
+easyocr
+transformers
+torch
+openai
+pillow
+numpy
+evaluate
+dataset
