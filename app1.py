@@ -8,9 +8,14 @@ from huggingface_hub import login
 
 @st.cache_resource
 def load_classifier():
-    login(token=st.secrets["HF_TOKEN"])
-    tokenizer = AutoTokenizer.from_pretrained("AkDieg0/audit_distilbeto")
-    model = AutoModelForSequenceClassification.from_pretrained("AkDieg0/audit_distilbeto")
+    tokenizer = AutoTokenizer.from_pretrained(
+        "AkDieg0/audit_distilbeto",
+        use_auth_token=st.secrets["HF_TOKEN"]
+    )
+    model = AutoModelForSequenceClassification.from_pretrained(
+        "AkDieg0/audit_distilbeto",
+        use_auth_token=st.secrets["HF_TOKEN"]
+    )
     return pipeline("text-classification", model=model, tokenizer=tokenizer, return_all_scores=True)
 
 @st.cache_resource
@@ -75,4 +80,5 @@ if uploaded:
                 st.subheader("✅ Actividades sugeridas")
 
                 st.markdown(suggestion)
+
 
