@@ -6,17 +6,17 @@ from transformers import AutoTokenizer, AutoModelForSequenceClassification, pipe
 from openai import OpenAI
 from huggingface_hub import login
 
-HF_TOKEN = "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"  # Pega tu token temporalmente solo para prueba
-
-tokenizer = AutoTokenizer.from_pretrained(
-    "AkDieg0/audit_distilbeto",
-    use_auth_token=HF_TOKEN
-)
-model = AutoModelForSequenceClassification.from_pretrained(
-    "AkDieg0/audit_distilbeto",
-    use_auth_token=HF_TOKEN
-)
-classifier = pipeline("text-classification", model=model, tokenizer=tokenizer, return_all_scores=True)
+@st.cache_resource
+def load_classifier():
+    tokenizer = AutoTokenizer.from_pretrained(
+        "AkDieg0/audit_distilbeto",
+        use_auth_token=st.secrets["HF_TOKEN"]
+    )
+    model = AutoModelForSequenceClassification.from_pretrained(
+        "AkDieg0/audit_distilbeto",
+        use_auth_token=st.secrets["HF_TOKEN"]
+    )
+    return pipeline("text-classification", model=model, tokenizer=tokenizer, return_all_scores=True)
 
 @st.cache_resource
 def load_ocr():
@@ -80,6 +80,7 @@ if uploaded:
                 st.subheader("✅ Actividades sugeridas")
 
                 st.markdown(suggestion)
+
 
 
 
