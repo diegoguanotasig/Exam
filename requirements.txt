@@ -3,7 +3,7 @@ easyocr
 transformers
 torch
 openai
-pillow
+Pillow
 numpy
 evaluate
 dataset
