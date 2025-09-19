@@ -4,11 +4,13 @@ import numpy as np
 import easyocr
 from transformers import AutoTokenizer, AutoModelForSequenceClassification, pipeline
 from openai import OpenAI
+from huggingface_hub import login
 
 @st.cache_resource
 def load_classifier():
-    tokenizer = AutoTokenizer.from_pretrained(r"F:\2025\MAST_IA\1.- Fundamentos IA\Examen\models\audit_distilbeto")
-    model = AutoModelForSequenceClassification.from_pretrained(r"F:\2025\MAST_IA\1.- Fundamentos IA\Examen\models\audit_distilbeto")
+    login(token=st.secrets["HF_TOKEN"])
+    tokenizer = AutoTokenizer.from_pretrained("AkDieg0/audit_distilbeto")
+model = AutoModelForSequenceClassification.from_pretrained("AkDieg0/audit_distilbeto")
     return pipeline("text-classification", model=model, tokenizer=tokenizer, return_all_scores=True)
 
 @st.cache_resource
@@ -71,4 +73,5 @@ if uploaded:
                 )
                 suggestion = resp.choices[0].message.content
                 st.subheader("✅ Actividades sugeridas")
+
                 st.markdown(suggestion)
