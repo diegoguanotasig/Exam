@@ -38,7 +38,7 @@ threshold = st.slider("Umbral probabilidad", 0.0, 1.0, 0.6)
 
 if uploaded:
     img = Image.open(uploaded).convert("RGB")
-    st.image(img, caption="Imagen cargada", use_column_width=True)
+    st.image(img, caption="Imagen cargada", use_container_width=True)
 
     # OCR
     ocr_result = reader.readtext(np.array(img), detail=1)
@@ -84,6 +84,7 @@ if uploaded:
                 st.subheader("✅ Actividades sugeridas")
 
                 st.markdown(suggestion)
+
 
 
 
